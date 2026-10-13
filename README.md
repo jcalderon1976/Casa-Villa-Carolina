@@ -26,7 +26,7 @@ npm run preview
 
 ## Documentos y fotos
 
-Pon los PDF, recibos y fotos en la carpeta `public/`, con el mismo nombre de archivo que ya usa la app. Vite los sirve desde la raíz, así que los enlaces de Documentos y Fotos funcionan igual que en el HTML original.
+Los PDF, recibos y fotos van en la raíz del proyecto, con el mismo nombre de archivo que ya usa la app. La build los copia a `dist` para que Amplify los publique.
 
 Si el repositorio va a ser público, no subas contratos, cheques, el NDA ni otros documentos privados.
 
