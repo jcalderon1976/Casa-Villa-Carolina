@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Casa Villa Carolina</title>
+<style>
+:root{--bg:#f6f5f2;--card:#fff;--ink:#1d2321;--mute:#6b736f;--line:#e4e2dc;--acc:#1f6f5c;--acc2:#c98a2b;--neg:#b4412f;--pos:#1f7a4d;--chip:#eef3f1}
+@media (prefers-color-scheme:dark){:root{--bg:#141716;--card:#1d2120;--ink:#e9ecea;--mute:#9aa39f;--line:#2e3432;--acc:#4fb595;--acc2:#e0a54c;--neg:#e0705d;--pos:#5cc78d;--chip:#24302c}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
+header h1{font-size:18px;margin:0}header small{color:var(--mute)}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav button{border:0;background:none;color:var(--mute);padding:8px 12px;border-radius:8px;font:inherit;cursor:pointer}
+nav button.on{background:var(--chip);color:var(--acc);font-weight:600}
+main{max-width:1200px;margin:0 auto;padding:20px 16px 60px}
+.grid{display:grid;gap:14px}.k4{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}.k2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card h3{margin:0 0 10px;font-size:14px;color:var(--mute);font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.kpi .v{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}.kpi .s{color:var(--mute);font-size:12.5px}
+.hero{border-left:5px solid var(--acc)}
+.pos{color:var(--pos)}.neg{color:var(--neg)}.mute{color:var(--mute)}
+.bar{height:10px;background:var(--chip);border-radius:6px;overflow:hidden}.bar>i{display:block;height:100%;background:var(--acc)}
+.row{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line)}.row:last-child{border:0}
+.row b{font-variant-numeric:tabular-nums}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--mute);font-weight:600;position:sticky;top:0;background:var(--card);cursor:pointer;white-space:nowrap}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.warn td{background:color-mix(in srgb,var(--acc2) 12%,transparent)}
+.tw{overflow:auto;max-height:65vh;padding:0 8px 8px}
+.drop{border:2px dashed var(--line);border-radius:10px;padding:18px;text-align:center;cursor:pointer;margin-bottom:14px;transition:.15s}
+.drop:hover,.drop.over{border-color:var(--acc);background:var(--chip)}
+.drop b{color:var(--acc)}.drop .st{font-size:12.5px;margin-top:6px;color:var(--mute)}
+.drop.has{display:flex;gap:12px;align-items:center;text-align:left;padding:10px}
+.drop img.th{width:64px;height:64px;object-fit:cover;border-radius:6px}
+.auto{box-shadow:0 0 0 2px var(--acc2) inset}
+.splits{display:flex;gap:4px;flex-wrap:wrap}
+.span2{grid-column:span 2}@media(max-width:640px){.span2{grid-column:auto}}
+.tag{display:inline-block;padding:1px 8px;border-radius:10px;background:var(--chip);font-size:11.5px;color:var(--acc)}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 12px;border-radius:8px;cursor:pointer;font:inherit}
+.btn.p{background:var(--acc);border-color:var(--acc);color:#fff}.btn.sm{padding:3px 8px;font-size:12px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+input,select,textarea{font:inherit;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mute)}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+dialog{border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);max-width:760px;width:94vw}
+dialog::backdrop{background:#0006}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.gal figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.gal img{width:100%;height:170px;object-fit:cover;display:block;cursor:zoom-in}.gal figcaption{padding:8px 10px;font-size:12.5px}
+.doc{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}.doc a{color:var(--acc);text-decoration:none;font-weight:500}
+.alert{border-left:4px solid var(--acc2);padding:8px 12px;background:var(--card);border-radius:6px;margin:6px 0;font-size:13px}
+.hbar{display:grid;grid-template-columns:150px 1fr 90px;gap:8px;align-items:center;margin:6px 0;font-size:13px}
+.slider{display:flex;gap:10px;align-items:center}.slider input[type=range]{flex:1}
+@media(max-width:640px){.hbar{grid-template-columns:100px 1fr 80px}header{position:static}}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>🏠 Casa Villa Carolina</h1><small>Solar #3 Manzana 202, Urb. Villa Carolina · Flip — Jose Javier Calderon & Arnaldo Aponte</small></div>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><nav id="nav"></nav>
+   <button class="btn" id="syncBtn" onclick="syncExcel(true)" title="Sincronizar con el Excel">🔄 Sincronizar Excel</button><small id="syncSt" class="mute"></small></div>
+</header>
+<main id="app"></main>
+
+<dialog id="dlg"><form method="dialog" id="frm"></form></dialog>
+<dialog id="imgdlg" onclick="this.close()"><img id="bigimg" style="width:100%"></dialog>
+
+<script>
+const KEY='villaCarolina.v1';
+const CATS=['Adquisición','Cierre / Legal','Techo / Exterior','Electricidad','Cocina','Baño','Piso','Puertas / Ventanas','Herramientas / Equipo','Misceláneos','Tenencia (CRIM / luz / agua / seguro)'];
+const PEOPLE={J:'Jose Javier',A:'Arnaldo'};
+let uid=1;const E=(cat,desc,vendor,receipt,total,date,jose,arnaldo,note,file,check)=>({id:uid++,cat,desc,vendor,receipt:receipt||'',total,date:date||'',jose:jose||0,arnaldo:arnaldo||0,note:note||'',file:file||'',check:check||''});
+
+// Datos iniciales tomados de "Estimados de costos.xlsx" + documentos de cierre
+const SEED={
+ settings:{salePrice:260000,commissionPct:5,sellerClosing:3000,renoBudget:25000,profitSplit:'capital',targetRoi:20},
+ expenses:[
+  E('Adquisición','Precio de compra – cheque a vendedor (Enrique Rodríguez)','Banco Popular','103114600016304',71182,'2026-07-20',71182,0,'Cheque oficial','Cheques Pago Total07272026.pdf'),
+  E('Adquisición','Precio de compra – cheque a vendedora (Lissa Dávila)','Banco Popular','103114600016302',71182,'2026-07-20',0,71182,'Cheque oficial','Cheques Pago Total07272026.pdf'),
+  E('Adquisición','Factura legal parte vendedora (descontada del precio)','Lcda. Lesbia Hernández','103114600016303',2636,'2026-07-20',0,2636,'Parte del precio de $150,000','Cheques Pago Total07272026.pdf'),
+  E('Adquisición','Depósito de buena fe','—','',5000,'2026-06-07',2500,2500,'Parte del precio de $150,000','Contrato Compra y Venta Casa Villa Carolina06072026 (1).pdf','¿Quién pagó el depósito? Se asumió 50/50 — corregir'),
+  E('Cierre / Legal','Factura legal parte compradora (escritura, aranceles, CRIM)','Lcda. Lesbia Hernández','',1199.5,'2026-07-20',599.75,599.75,'','Factura y desglose de pago por gastos legales07272026.pdf','¿Quién pagó? Se asumió 50/50 — corregir'),
+  E('Cierre / Legal','Cargos de cheques oficiales (3 × $10)','Banco Popular','',30,'2026-07-20',10,20,'','Cheques Pago Total07272026.pdf'),
+  E('Techo / Exterior','Sellado de techo / estucado / pintura / jardín','Jose','',4500,'',1750,2250,'Restan $500'),
+  E('Electricidad','Electricista','Rigo Electric','',1100,'2026-08-19',550,550,''),
+  E('Electricidad','Electricista (cotización, se restó del trabajo)','Rigo Electric','',98,'2026-08-27',49,49,'Se pagó por cotización'),
+  E('Cocina','Ebanistería – cotización','jbmProjectsPr','',150,'2026-08-20',75,75,'Cotización muy alta'),
+  E('Techo / Exterior','Materiales techo (Crossco 8500, Harris, pega)','Home Depot','C7LUN-PDG6U',492.79,'2026-09-21',246.39,246.40,'','Home Depot $492.79  Sep 21 2026 eReceipt.pdf'),
+  E('Herramientas / Equipo','Hammer Milwaukee (shipping)','Home Depot','DP3TP-THSC3',348.95,'2026-08-29',174.47,174.48,'Herramientas','Home Depot $348.95    Aug 29 2026 eReceipt.pdf'),
+  E('Herramientas / Equipo','Wet Tile Saw','Home Depot','FX5FD-P71PL',279.55,'2026-08-05',139.77,139.78,'','Home Depot 279.55    Aug 5  2026 - Tile Cutter-  eReceipt.pdf'),
+  E('Puertas / Ventanas','1 puerta – back patio','Luis Mercado','',400,'2026-09-23',200,200,'','', 'Excel: depósito $200 pero Jose $200 + Arnaldo $200 = $400. Verificar'),
+  E('Techo / Exterior','Renta máquina de presión (techo)','JD Equipment & Supply','4KFHH9E8MQAEP',116.5,'2026-09-09',58.25,58.25,''),
+  E('Cocina','Cocina – gabinetes/instalación','Dario','1753',4240,'2026-10-09',1500,740,'Restan $2,000','planso de cocina lower.png'),
+  E('Baño','Ducha baño pasillo y switch de luces','Home Depot','',492.79,'',492.79,0,'','Home Depot $193.10    Aug 1 2026 - Shower -  eReceipt.pdf','Mismo monto que la compra de techo del 21-sep ($492.79). ¿Duplicado? El recibo de ducha es $193.10'),
+  E('Piso','Instalación de losas','Jose','',4000,'',2000,0,'Restan $2,000'),
+  E('Piso','Losas 24"×24"','Carolina Tile Outlet','',2892.31,'',2892.31,0,'1.69 ft² losa 24×24','losas 24 x 24 1.30 home depot.png'),
+  E('Piso','Envío de losas (ATH Móvil)','Juan Acevedo – Carolina Tile Outlet','',250,'',250,0,''),
+  E('Piso','Bloques, pegas de losa, herramientas','Home Depot','U9UW5-TWY73',210.87,'2026-09-30',0,210.87,'','Home Depot $210 Spet 30 2026 eReceipt.pdf'),
+  E('Herramientas / Equipo','Renta máquina destapar desagües + disco 5" canaletas','JD Equipment & Supply','XZFRQAK19HR1R',189.51,'2026-09-23',189.51,0,'','', 'Excel muestra $169.97 pagado vs. total $189.51. Verificar'),
+  E('Misceláneos','Angulares','Market China','345242',17.06,'2026-09-29',17.06,0,''),
+  E('Misceláneos','Ferretería – angulares','Pepito Food Market','C3202583',51.41,'2026-09-28',51.41,0,''),
+  E('Electricidad','Tornillos y bases para receptáculos','National Lumber','',8.99,'2026-09-30',8.99,0,''),
+  E('Piso','Lash floor level clip','Home Depot','8X4GH-HF2TV',232.58,'2026-09-30',232.58,0,''),
+  E('Misceláneos','Door locks, goznes, pintura de bañera','Amazon','',257.33,'2026-10-07',257.33,0,'','', 'Pago no registrado en Excel; se asumió pagado por Jose'),
+  E('Baño','Ducha, sellador de techo, misceláneos','Home Depot','',411.64,'2026-10-07',0,411.64,'','Home Depot 411.64  Octubre 7 2026 -Shower-Sellado de Techo .pdf','Pago no registrado en Excel; se asumió pagado por Arnaldo'),
+  E('Puertas / Ventanas','11 ventanas – cocina, sala, frente','Javier – Ventanas','',3495,'',0,0,'Pendiente'),
+  E('Puertas / Ventanas','2 fijos – frente','Air Master','',458,'',0,0,'Pendiente'),
+  E('Puertas / Ventanas','2 puertas – cocina','Luis Mercado','',0,'',0,0,'Falta cotización','', 'Sin precio todavía'),
+ ]};
+
+const DOCS=[
+ ['Compra / Legal','Contrato Compra y Venta Casa Villa Carolina06072026 (1).pdf','Contrato de compraventa (7 jun 2026)'],
+ ['Compra / Legal','Contrato-firmado.pdf','Contrato firmado'],
+ ['Compra / Legal','cuadre.pdf','Desglose de cheques del cierre'],
+ ['Compra / Legal','Cheques Pago Total07272026.pdf','Cheques oficiales de pago'],
+ ['Compra / Legal','Cheque Conpraventa 2.pdf','Cheque compraventa 2'],
+ ['Compra / Legal','Factura y desglose de pago por gastos legales07272026.pdf','Factura legal parte compradora'],
+ ['Compra / Legal','certificado de pago por gastos legales07272026.pdf','Certificado de pago gastos legales'],
+ ['Compra / Legal','Complete_with_Docusign_Mutual_NDA_Orchids_Te.pdf','NDA mutuo (DocuSign)'],
+ ['Tasación','Tasacion VillaCarolina.pdf','Tasación'],
+ ['Recibos','Home Depot $193.10    Aug 1 2026 - Shower -  eReceipt.pdf','Home Depot $193.10 – Ducha (1 ago)'],
+ ['Recibos','Home Depot 279.55    Aug 5  2026 - Tile Cutter-  eReceipt.pdf','Home Depot $279.55 – Tile saw (5 ago)'],
+ ['Recibos','Home Depot $348.95    Aug 29 2026 eReceipt.pdf','Home Depot $348.95 (29 ago)'],
+ ['Recibos','Home Depot $120.42 - Canceled   Aug 29 2026 eReceipt.pdf','Home Depot $120.42 – CANCELADO (29 ago)'],
+ ['Recibos','Home Depot $492.79  Sep 21 2026 eReceipt.pdf','Home Depot $492.79 (21 sep)'],
+ ['Recibos','Home Depot $210 Spet 30 2026 eReceipt.pdf','Home Depot $210.87 (30 sep)'],
+ ['Recibos','Home Depot 411.64  Octubre 7 2026 -Shower-Sellado de Techo .pdf','Home Depot $411.64 – Ducha / sellador (7 oct)'],
+ ['Recibos','Recibo 411.64 Home Depot 10-7-2026.png','Recibo $411.64 (imagen)'],
+ ['Planos','plano.jpg','Plano de la casa'],
+ ['Planos','planso de cocina lower.png','Plano gabinetes cocina'],
+];
+const PHOTOS=[
+ ['front view original.jpeg','Frente – original'],['Fron View - Remodelado.jpeg','Frente – remodelado'],
+ ['cocina original.jpeg','Cocina – original'],['cocina remodelada.jpeg','Cocina – remodelada'],['cocina remodelada 2.jpeg','Cocina – remodelada 2'],['cocina remodelada 3.jpeg','Cocina – remodelada 3'],
+ ['bano master.jpg','Baño master'],['casa piso losa 12 x 12.jpg','Piso losa 12×12'],['casa piso losa 24 x 24.png','Piso losa 24×24 (render)'],
+ ['losas 24 x 24 1.30 home depot.png','Losa 24×24 Home Depot'],['Problema de luz.jpg','Problema de luz'],['plano.jpg','Plano'],
+];
+
+let S=load(),tab=(()=>{try{return localStorage.getItem(KEY+'.tab')}catch(e){}})()||'dash',sort={k:'date',d:1},filt={q:'',cat:'',st:''};
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.expenses){s.expenses.forEach(e=>{if(/^Tenencia/.test(e.cat))e.cat=CATS[10]});uid=Math.max(0,...s.expenses.map(e=>e.id))+1;return s}}catch(e){}return structuredClone(SEED)}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(window.autoPush)autoPush()}
+const $=n=>'$'+(+n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const $0=n=>(n<0?'-':'')+'$'+Math.abs(Math.round(+n||0)).toLocaleString('en-US');
+const pct=n=>(isFinite(n)?n.toFixed(1):'0')+'%';
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const href=f=>encodeURI(f).replace(/#/g,'%23');
+const paid=e=>(+e.jose||0)+(+e.arnaldo||0);
+const pend=e=>Math.max(0,(+e.total||0)-paid(e));
+
+function calc(){
+ const ex=S.expenses,st=S.settings,sum=f=>ex.reduce((a,e)=>a+f(e),0);
+ const acq=sum(e=>e.cat==='Adquisición'?+e.total:0),close=sum(e=>e.cat==='Cierre / Legal'?+e.total:0);
+ const reno=sum(e=>['Adquisición','Cierre / Legal'].includes(e.cat)?0:+e.total);
+ const total=acq+close+reno,paidT=sum(paid),pendT=sum(pend);
+ const sell=st.salePrice*st.commissionPct/100+ +st.sellerClosing;
+ const net=st.salePrice-sell,profit=net-total;
+ const J=sum(e=>+e.jose),A=sum(e=>+e.arnaldo);
+ const be=(total+ +st.sellerClosing)/(1-st.commissionPct/100);
+ const byCat={};ex.forEach(e=>byCat[e.cat]=(byCat[e.cat]||0)+ +e.total);
+ const flags=ex.filter(e=>e.check);
+ const maxReno=(net/(1+st.targetRoi/100))-acq-close;
+ return{acq,close,reno,total,paidT,pendT,sell,net,profit,roi:profit/total*100,margin:profit/st.salePrice*100,J,A,be,byCat,flags,maxReno};
+}
+function shares(c){const s=S.settings.profitSplit;let pj=.5;if(s==='capital'&&c.J+c.A>0)pj=c.J/(c.J+c.A);return{pj,pa:1-pj}}
+
+const TABS={dash:'Dashboard',gastos:'Gastos',socios:'Socios',docs:'Documentos',fotos:'Fotos',ajustes:'Ajustes'};
+function nav(){document.getElementById('nav').innerHTML=Object.entries(TABS).map(([k,v])=>`<button class="${k===tab?'on':''}" onclick="go('${k}')">${v}</button>`).join('')}
+function go(t){tab=t;try{localStorage.setItem(KEY+'.tab',t)}catch(e){}render()}
+// Los avisos "Para revisar" se quitan solos cuando cambia el total o lo pagado (ej. se corrigió el monto)
+const chk=e=>[e.total,e.jose,e.arnaldo].map(v=>(+v||0).toFixed(2)).join('|');
+function resolveChecks(){let ch=false;for(const e of S.expenses){if(!e.check)continue;
+ if(!e.checkAt){const s=SEED.expenses.find(z=>z.id===e.id&&z.check===e.check);e.checkAt=chk(s||e);ch=true}
+ if(e.checkAt!==chk(e)){e.check='';delete e.checkAt;ch=true}}
+ if(ch)try{localStorage.setItem(KEY,JSON.stringify(S))}catch(x){}}
+function resolve(id){const e=S.expenses.find(x=>x.id===id);if(e){e.check='';delete e.checkAt;save();render()}}
+function render(){resolveChecks();nav();document.getElementById('app').innerHTML=({dash:vDash,gastos:vGastos,socios:vSocios,docs:vDocs,fotos:vFotos,ajustes:vAjustes})[tab]();}
+
+function vDash(){
+ const c=calc(),st=S.settings,rb=Math.min(100,c.reno/st.renoBudget*100);
+ const cats=Object.entries(c.byCat).filter(([k])=>k!=='Adquisición').sort((a,b)=>b[1]-a[1]),mx=Math.max(...cats.map(x=>x[1]),1);
+ const sens=[230000,240000,250000,260000,270000,280000].map(p=>{const n=p*(1-st.commissionPct/100)-st.sellerClosing,pr=n-c.total;return`<tr${p==st.salePrice?' style="font-weight:700"':''}><td>${$0(p)}</td><td class="n ${pr<0?'neg':'pos'}">${$0(pr)}</td><td class="n">${pct(pr/c.total*100)}</td><td class="n">${pct(pr/p*100)}</td></tr>`}).join('');
+ return`
+ <div class="card hero" style="margin-bottom:14px">
+  <div class="slider"><b>Precio de venta meta</b><input type="range" min="200000" max="320000" step="1000" value="${st.salePrice}" oninput="setS('salePrice',+this.value,1)"><b style="font-size:20px;min-width:110px;text-align:right">${$0(st.salePrice)}</b></div>
+  <div class="slider mute" style="margin-top:6px">Comisión de venta<input type="range" min="0" max="7" step="0.5" value="${st.commissionPct}" oninput="setS('commissionPct',+this.value,1)"><span style="min-width:110px;text-align:right">${st.commissionPct}% + ${$0(st.sellerClosing)} cierre</span></div>
+ </div>
+ <div class="grid k4">
+  <div class="card kpi"><h3>Ganancia neta proyectada</h3><div class="v ${c.profit<0?'neg':'pos'}">${$0(c.profit)}</div><div class="s">después de ${$0(c.sell)} en costos de venta</div></div>
+  <div class="card kpi"><h3>% Ganancia (ROI)</h3><div class="v ${c.roi<0?'neg':'pos'}">${pct(c.roi)}</div><div class="s">ganancia ÷ inversión total · margen sobre venta ${pct(c.margin)}</div></div>
+  <div class="card kpi"><h3>Inversión total</h3><div class="v">${$0(c.total)}</div><div class="s">compra ${$0(c.acq)} · cierre ${$0(c.close)} · remodelación ${$0(c.reno)}</div></div>
+  <div class="card kpi"><h3>Punto de equilibrio</h3><div class="v">${$0(c.be)}</div><div class="s">precio mínimo de venta para no perder</div></div>
+ </div>
+ <div class="grid k2" style="margin-top:14px">
+  <div class="card"><h3>Presupuesto de remodelación</h3>
+   <div class="row"><span>Comprometido</span><b>${$0(c.reno)} de ${$0(st.renoBudget)}</b></div>
+   <div class="bar" style="margin:8px 0"><i style="width:${rb}%;background:${rb>95?'var(--neg)':rb>80?'var(--acc2)':'var(--acc)'}"></i></div>
+   <div class="row"><span>Disponible</span><b class="${st.renoBudget-c.reno<0?'neg':''}">${$0(st.renoBudget-c.reno)}</b></div>
+   <div class="row"><span>Pagado hasta hoy (todo)</span><b>${$0(c.paidT)}</b></div>
+   <div class="row"><span>Pendiente por pagar</span><b class="neg">${$0(c.pendT)}</b></div>
+   <div class="row"><span>Máx. remodelación para ROI de ${st.targetRoi}%</span><b>${$0(c.maxReno)}</b></div>
+  </div>
+  <div class="card"><h3>Gastos por categoría (sin precio de compra)</h3>
+   ${cats.map(([k,v])=>`<div class="hbar"><span>${esc(k)}</span><div class="bar"><i style="width:${v/mx*100}%"></i></div><b class="n" style="text-align:right">${$0(v)}</b></div>`).join('')}
+  </div>
+  <div class="card"><h3>Escenarios de precio de venta</h3><table><tr><th>Venta</th><th class="n">Ganancia</th><th class="n">ROI</th><th class="n">Margen</th></tr>${sens}</table></div>
+  <div class="card"><h3>Para revisar (${c.flags.length})</h3>${c.flags.map(e=>`<div class="alert" style="display:flex;gap:10px;justify-content:space-between;align-items:start"><span><b>${esc(e.desc)}</b> — ${$(e.total)}<br>${esc(e.check)}</span><button class="btn sm" onclick="resolve(${e.id})">✓ Resuelto</button></div>`).join('')||'<span class="mute">Todo en orden ✓</span>'}</div>
+ </div>`;
+}
+
+function vGastos(){
+ let rows=S.expenses.filter(e=>(!filt.cat||e.cat===filt.cat)&&(!filt.st||(filt.st==='pend'?pend(e)>0:filt.st==='rev'?e.check:pend(e)===0))&&(!filt.q||JSON.stringify(e).toLowerCase().includes(filt.q.toLowerCase())));
+ rows.sort((a,b)=>{const k=sort.k;let x=k==='paid'?paid(a):k==='pend'?pend(a):a[k],y=k==='paid'?paid(b):k==='pend'?pend(b):b[k];return(typeof x==='number'?x-y:String(x).localeCompare(String(y)))*sort.d});
+ const t=f=>rows.reduce((a,e)=>a+f(e),0);
+ const H=(k,l,n)=>`<th class="${n?'n':''}" onclick="srt('${k}')">${l}${sort.k===k?(sort.d>0?' ▲':' ▼'):''}</th>`;
+ return`<div class="tools">
+  <button class="btn p" onclick="edit()">+ Nuevo gasto</button>
+  <input placeholder="Buscar…" value="${esc(filt.q)}" oninput="filt.q=this.value;rerender()" id="q">
+  <select onchange="filt.cat=this.value;render()"><option value="">Todas las categorías</option>${CATS.map(c=>`<option ${c===filt.cat?'selected':''}>${c}</option>`).join('')}</select>
+  <select onchange="filt.st=this.value;render()"><option value="">Todos</option><option value="pend" ${filt.st==='pend'?'selected':''}>Con balance pendiente</option><option value="ok" ${filt.st==='ok'?'selected':''}>Pagados</option><option value="rev" ${filt.st==='rev'?'selected':''}>Para revisar</option></select>
+  <button class="btn" onclick="csv()">Exportar a Excel (CSV)</button>
+ </div>
+ <div class="card tw"><table><thead><tr>${H('date','Fecha')}${H('cat','Categoría')}${H('desc','Descripción')}${H('vendor','Suplidor')}${H('total','Total',1)}${H('jose','Jose',1)}${H('arnaldo','Arnaldo',1)}${H('pend','Pendiente',1)}<th>Doc</th><th></th></tr></thead><tbody>
+ ${rows.map(e=>`<tr class="${e.check?'warn':''}" title="${esc(e.check||e.note)}"><td>${esc(e.date)}</td><td><span class="tag">${esc(e.cat)}</span></td><td>${esc(e.desc)}${e.note?`<div class="mute" style="font-size:12px">${esc(e.note)}</div>`:''}${e.check?`<div style="font-size:12px;color:var(--acc2)">⚠ ${esc(e.check)}</div>`:''}</td><td>${esc(e.vendor)}${e.receipt?`<div class="mute" style="font-size:11.5px">#${esc(e.receipt)}</div>`:''}</td><td class="n">${$(e.total)}</td><td class="n">${$(e.jose)}</td><td class="n">${$(e.arnaldo)}</td><td class="n ${pend(e)>0?'neg':''}">${pend(e)>0?$(pend(e)):'✓'}</td><td>${e.upload?`<a href="#" onclick="openUpload(${e.id});return false" title="${esc(e.upload.name)}">🧾</a>`:''}${e.file?`<a href="${href(e.file)}" target="_blank" title="${esc(e.file)}">📎</a>`:''}</td><td><button class="btn sm" onclick="edit(${e.id})">Editar</button></td></tr>`).join('')}
+ </tbody><tfoot><tr><th colspan="4">${rows.length} partidas</th><th class="n">${$(t(e=>+e.total))}</th><th class="n">${$(t(e=>+e.jose))}</th><th class="n">${$(t(e=>+e.arnaldo))}</th><th class="n">${$(t(pend))}</th><th colspan="2"></th></tr></tfoot></table></div>`;
+}
+function rerender(){const p=document.getElementById('q').selectionStart;render();const q=document.getElementById('q');q.focus();q.setSelectionRange(p,p)}
+function srt(k){sort.d=sort.k===k?-sort.d:1;sort.k=k;render()}
+
+function vSocios(){
+ const c=calc(),{pj,pa}=shares(c),st=S.settings,P=[['Jose Javier Calderon',c.J,pj],['Arnaldo Aponte',c.A,pa]];
+ const diff=(c.J-c.A)/2;
+ return`<div class="grid k2">${P.map(([n,cap,sh])=>`<div class="card"><h3>${n}</h3>
+  <div class="row"><span>Capital aportado</span><b>${$(cap)}</b></div>
+  <div class="row"><span>% del capital</span><b>${pct(cap/(c.J+c.A)*100)}</b></div>
+  <div class="row"><span>Participación en ganancia (${st.profitSplit==='capital'?'según capital':'50/50'})</span><b>${pct(sh*100)}</b></div>
+  <div class="row"><span>Ganancia proyectada</span><b class="pos">${$(c.profit*sh)}</b></div>
+  <div class="row"><span>Recibe al vender (capital + ganancia)</span><b>${$(cap+c.profit*sh)}</b></div></div>`).join('')}</div>
+ <div class="card" style="margin-top:14px"><h3>Balance entre socios</h3>
+  <p>${Math.abs(diff)<1?'Los aportes están balanceados.':`${diff>0?'Jose Javier':'Arnaldo'} ha aportado <b>${$(Math.abs(diff*2))}</b> más. Para quedar 50/50, ${diff>0?'Arnaldo':'Jose Javier'} debería aportar <b>${$(Math.abs(diff))}</b> (o se compensa al repartir la venta).`}</p>
+  <p class="mute">Pendiente por pagar a suplidores: ${$(c.pendT)}. Cambia la forma de repartir la ganancia en Ajustes.</p></div>`;
+}
+
+function vDocs(){
+ const g={};DOCS.forEach(d=>(g[d[0]]=g[d[0]]||[]).push(d));
+ return`<p class="mute">Los enlaces abren los archivos de esta misma carpeta. Mantén este archivo HTML junto a los documentos.</p><div class="grid k2">${Object.entries(g).map(([k,ds])=>`<div class="card"><h3>${k}</h3>${ds.map(([,f,l])=>`<div class="doc">${/\.pdf$/i.test(f)?'📄':'🖼️'}<a href="${href(f)}" target="_blank">${esc(l)}</a></div>`).join('')}</div>`).join('')}</div>`;
+}
+function vFotos(){return`<div class="gal">${PHOTOS.map(([f,l])=>`<figure><img loading="lazy" src="${href(f)}" alt="${esc(l)}" onclick="big('${href(f)}')"><figcaption>${esc(l)}</figcaption></figure>`).join('')}</div>`}
+function big(s){document.getElementById('bigimg').src=s;document.getElementById('imgdlg').showModal()}
+
+function vAjustes(){const st=S.settings;const F=(k,l,t='number')=>`<label>${l}<input type="${t}" value="${st[k]}" onchange="setS('${k}',+this.value)"></label>`;
+ return`<div class="card"><h3>Supuestos de la venta</h3><div class="form">
+  ${F('salePrice','Precio de venta meta ($)')}${F('commissionPct','Comisión corredor (%)')}${F('sellerClosing','Gastos de cierre del vendedor ($)')}${F('renoBudget','Presupuesto remodelación ($)')}${F('targetRoi','ROI meta (%)')}
+  <label>Repartir ganancia<select onchange="setS('profitSplit',this.value)"><option value="capital" ${st.profitSplit==='capital'?'selected':''}>Según capital aportado</option><option value="50" ${st.profitSplit==='50'?'selected':''}>50 / 50</option></select></label>
+ </div></div>
+ <div class="card" style="margin-top:14px"><h3>Sincronización con Excel</h3>
+  <p class="mute">La app y el Excel se mantienen iguales. En el Excel se usa la hoja <b>«Proyeccion»</b> (la app le añade las columnas «Categoría» e «ID App»); los supuestos de venta están en <b>«Resumen (App)»</b>. La compra y el cierre se manejan aquí en la app.
+  Si cambias algo aquí, se escribe en el Excel; si cambias el Excel, se trae aquí al presionar 🔄 o al volver a esta ventana.</p>
+  <div class="tools"><button class="btn p" onclick="syncExcel(true)">🔄 Sincronizar ahora</button><button class="btn" onclick="pickExcel().then(()=>syncExcel(true)).catch(()=>{})">Escoger otro archivo de Excel</button><button class="btn" onclick="unlinkExcel()">Desconectar</button></div>
+  <div id="syncInfo" class="mute" style="font-size:12.5px"></div></div>
+ <div class="card" style="margin-top:14px"><h3>Respaldo de datos</h3>
+  <p class="mute">Los datos se guardan en este navegador. Exporta un respaldo (.json) y guárdalo en esta carpeta de OneDrive para que tu socio lo pueda importar en su computadora.</p>
+  <div class="tools"><button class="btn p" onclick="backup()">Descargar respaldo</button><label class="btn" style="flex-direction:row">Importar respaldo<input type="file" accept=".json" hidden onchange="restore(this.files[0])"></label><button class="btn" onclick="csv()">Exportar gastos a Excel (CSV)</button><button class="btn" onclick="if(confirm('¿Volver a los datos originales del Excel? Se perderán los cambios.')){S=structuredClone(SEED);save();render()}">Restaurar datos originales</button></div></div>`}
+function setS(k,v,live){S.settings[k]=v;save();if(live){const y=scrollY;render();scrollTo(0,y)}else render()}
+
+function edit(id){
+ const e=id?S.expenses.find(x=>x.id===id):{id:0,cat:'Misceláneos',desc:'',vendor:'',receipt:'',total:0,date:new Date().toISOString().slice(0,10),jose:0,arnaldo:0,note:'',file:'',check:''};
+ const I=(k,l,t='text',x='')=>`<label>${l}<input name="${k}" type="${t}" ${t==='number'?'step="0.01"':''} value="${esc(e[k])}" ${x}></label>`;
+ const f=document.getElementById('frm');
+ pendingUpload=null;
+ f.innerHTML=`<h3 style="margin-top:0">${id?'Editar':'Nuevo'} gasto</h3>
+  <div class="drop" id="drop" onclick="document.getElementById('rf').click()" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="event.preventDefault();this.classList.remove('over');readReceipt(event.dataTransfer.files[0])">
+   ${e.upload?`<div>📎 <b>${esc(e.upload.name)}</b> <a href="#" onclick="event.stopPropagation();openUpload(${e.id});return false">ver</a><div class="st">Haz clic o arrastra otro recibo para reemplazarlo y leerlo de nuevo</div></div>`:`<div>📷 <b>Sube el recibo</b> (PDF o foto) y se llena automático</div><div class="st">Haz clic o arrastra el archivo aquí</div>`}
+  </div><input type="file" id="rf" accept="application/pdf,image/*" hidden onchange="readReceipt(this.files[0])">
+  <div class="form">
+  <label>Categoría<select name="cat">${CATS.map(c=>`<option ${c===e.cat?'selected':''}>${c}</option>`).join('')}</select></label>
+  ${I('date','Fecha','date')}${I('desc','Descripción')}${I('vendor','Suplidor / tienda')}${I('receipt','# Recibo')}
+  ${I('total','Total ($)','number')}${I('jose','Pagó Jose ($)','number')}${I('arnaldo','Pagó Arnaldo ($)','number')}
+  <label class="span2">¿Quién pagó?<span class="splits"><button type="button" class="btn sm" onclick="spl('J')">Jose</button><button type="button" class="btn sm" onclick="spl('H')">50/50</button><button type="button" class="btn sm" onclick="spl('A')">Arnaldo</button><button type="button" class="btn sm" onclick="spl('0')">Sin pagar</button></span></label>
+  <label>Documento de la carpeta<select name="file"><option value="">—</option>${DOCS.concat(PHOTOS.map(p=>['',p[0],p[1]])).map(d=>`<option value="${esc(d[1])}" ${d[1]===e.file?'selected':''}>${esc(d[1])}</option>`).join('')}</select></label>
+  ${I('note','Comentario')}${I('check','⚠ Para revisar (vacío = ok)')}
+ </div><div class="tools" style="margin-top:14px;justify-content:space-between"><span>${id?`<button type="button" class="btn" style="color:var(--neg)" onclick="del(${id})">Borrar</button>`:''}</span><span><button class="btn" value="cancel">Cancelar</button> <button type="button" class="btn p" onclick="sv(${id})">Guardar</button></span></div>`;
+ document.getElementById('dlg').showModal();
+}
+function spl(m){const f=document.getElementById('frm'),t=+f.total.value||0,h=Math.round(t*50)/100;f.jose.value=m==='J'?t:m==='H'?h:0;f.arnaldo.value=m==='A'?t:m==='H'?+(t-h).toFixed(2):0}
+function sv(id){const f=document.getElementById('frm'),d=Object.fromEntries(new FormData(f));['total','jose','arnaldo'].forEach(k=>d[k]=+d[k]||0);
+ if(!d.desc){alert('Falta la descripción');return}
+ let e;if(id){e=S.expenses.find(x=>x.id===id);Object.assign(e,d)}else{e={id:uid++,...d};S.expenses.push(e)}
+ if(e.check)e.checkAt=chk(e);else delete e.checkAt;
+ if(pendingUpload){const u=pendingUpload;e.upload={name:u.name,type:u.type};idb('put',e.id,u).catch(()=>alert('No se pudo guardar el archivo del recibo en este navegador; el gasto sí se guardó.'))}
+ save();document.getElementById('dlg').close();render()}
+function del(id){if(confirm('¿Borrar este gasto?')){S.expenses=S.expenses.filter(x=>x.id!==id);idb('delete',id).catch(()=>{});save();document.getElementById('dlg').close();render()}}
+
+// ---------- Recibos: subir, leer y llenar automático ----------
+const PDFJS='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js',PDFW='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+const TESS='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+let pendingUpload=null;const _js={};
+const loadJS=src=>_js[src]||(_js[src]=new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=()=>{delete _js[src];rej(new Error('No se pudo cargar el lector (¿hay internet?)'))};document.head.appendChild(s)}));
+function idb(op,key,val){return new Promise((res,rej)=>{const o=indexedDB.open('villaCarolina',1);o.onupgradeneeded=()=>o.result.createObjectStore('files');o.onerror=()=>rej(o.error);o.onsuccess=()=>{const st=o.result.transaction('files',op==='get'?'readonly':'readwrite').objectStore('files'),q=op==='put'?st.put(val,key):st[op](key);q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)}})}
+async function openUpload(id){try{const b=await idb('get',id);if(!b)throw 0;window.open(URL.createObjectURL(b),'_blank')}catch(e){alert('El archivo del recibo no está en este navegador. Importa un respaldo que lo incluya.')}}
+function dropMsg(html){const d=document.getElementById('drop');if(d){d.classList.add('has');d.innerHTML=html}}
+
+async function readReceipt(file){
+ if(!file)return;pendingUpload=file;
+ const thumb=file.type.startsWith('image/')?`<img class="th" src="${URL.createObjectURL(file)}">`:'<span style="font-size:40px">📄</span>';
+ const show=st=>dropMsg(`${thumb}<div><b>${esc(file.name)}</b><div class="st">${st}</div></div>`);
+ show('Leyendo el recibo…');
+ try{
+  let text;
+  if(file.type==='application/pdf'||/\.pdf$/i.test(file.name))text=await pdfText(file,show);
+  else if(file.type.startsWith('image/'))text=await ocr(file,show);
+  else throw new Error('Formato no soportado. Usa PDF, JPG o PNG.');
+  const r=parseReceipt(text),n=fillForm(r);
+  const dup=S.expenses.find(x=>(r.receipt&&x.receipt===r.receipt)||(r.total&&Math.abs(x.total-r.total)<.005&&(!r.date||!x.date||x.date===r.date)));
+  show(`${n?`✓ Se llenaron <b>${n}</b> campos (resaltados). Revísalos antes de guardar.`:'No se pudo leer información útil; llena los campos a mano.'}`+
+   (r.total&&!r.hasTotal?`<div style="color:var(--acc2);margin-top:4px">⚠ No encontré la línea TOTAL; verifica el monto.</div>`:'')+
+   (dup?`<div style="color:var(--neg);margin-top:4px">⚠ Posible duplicado: «${esc(dup.desc)}» ${$(dup.total)} ${esc(dup.date)}</div>`:'')+
+   `<div style="margin-top:4px"><a href="#" onclick="event.stopPropagation();document.getElementById('rf').click();return false">Cambiar archivo</a></div>`);
+ }catch(err){show(`<span style="color:var(--neg)">${esc(err.message||err)}</span> — el archivo igual se guardará con el gasto.`)}
+}
+async function pdfText(file,show){
+ await loadJS(PDFJS);pdfjsLib.GlobalWorkerOptions.workerSrc=PDFW;
+ const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;let out='';
+ for(let p=1;p<=Math.min(pdf.numPages,4);p++){
+  const tc=await(await pdf.getPage(p)).getTextContent(),rows=[];
+  for(const it of tc.items){if(!it.str.trim())continue;const x=it.transform[4],y=it.transform[5];let r=rows.find(r=>Math.abs(r.y-y)<3);if(!r)rows.push(r={y,i:[]});r.i.push({x,s:it.str})}
+  rows.sort((a,b)=>b.y-a.y);out+=rows.map(r=>r.i.sort((a,b)=>a.x-b.x).map(i=>i.s).join(' ')).join('\n')+'\n';
+ }
+ if(out.replace(/\s/g,'').length>30&&/\bTOTAL\b/i.test(out))return out;
+ show('PDF escaneado: leyendo la imagen con OCR…');
+ const pg=await pdf.getPage(1),vp=pg.getViewport({scale:2.5}),c=document.createElement('canvas');c.width=vp.width;c.height=vp.height;
+ await pg.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;return ocr(c,show);
+}
+async function ocr(img,show){
+ show('Cargando lector de texto (OCR)…');await loadJS(TESS);img=await prep(img);
+ const{data}=await Tesseract.recognize(img,'eng',{logger:m=>m.status==='recognizing text'&&show(`Leyendo texto… ${Math.round(m.progress*100)}%`)});
+ return fixOcr(data.text);
+}
+// Agranda recibos pequeños/angostos y los pasa a blanco y negro para que el OCR los lea mejor
+async function prep(src){
+ let bmp=src;if(src instanceof Blob)bmp=await createImageBitmap(src);
+ const w=bmp.width,h=bmp.height,k=Math.min(Math.max(1,1700/w),Math.sqrt(30e6/(w*h)));
+ const c=document.createElement('canvas');c.width=Math.round(w*k);c.height=Math.round(h*k);
+ const x=c.getContext('2d');x.filter='grayscale(1) contrast(1.4)';x.imageSmoothingQuality='high';x.drawImage(bmp,0,0,c.width,c.height);return c}
+// Corrige letras que el OCR confunde con números dentro de montos (411.€4 → 411.64)
+const fixOcr=t=>t.replace(/[$\d€£SOolI|]*\d[$\d€£SOolI|]*[.,][\d€£SOolI|]{2}\b/g,m=>m.replace(/[€£]/g,'6').replace(/[Oo]/g,'0').replace(/[lI|]/g,'1').replace(/S/g,'5'));
+const VENDORS=[[/HOME ?DEPOT|HOW DOERS/,'Home Depot'],[/LOWE'?S/,"Lowe's"],[/AMAZON/,'Amazon'],[/NATIONAL LUMBER/,'National Lumber'],[/JD EQUI/,'JD Equipment & Supply'],[/CAROLINA TILE/,'Carolina Tile Outlet'],[/PEPITO/,'Pepito Food Market'],[/MARKET CHINA/,'Market China'],[/WAL-?MART/,'Walmart'],[/COSTCO/,'Costco'],[/SAM'?S CLUB/,"Sam's Club"],[/BUILDERS/,'Builders'],[/KRESKO/,'Kresko'],[/ACE HARDWARE/,'Ace Hardware'],[/PLAZA LAS AM/,'Plaza Las Américas']];
+const CATKW={'Piso':/TILE|LOSA|THINSET|GROUT|PEGA|LEVEL(ING)? CLIP|FLOOR|PISO|MORTAR/g,'Baño':/SHOWER|DUCHA|TOILET|INODORO|FAUCET|LAVAMANOS|BAÑ|BATH|VANITY|TUB/g,
+ 'Techo / Exterior':/ROOF|TECHO|SEAL|SELLA|PAINT|PINTURA|STUCCO|ESTUC|GUTTER|CANALETA|PRESSURE|PRESION|COAT/g,'Electricidad':/WIRE|CABLE|BREAKER|OUTLET|RECEPT|SWITCH|BULB|LIGHT|ELECTRIC|GFCI|CONDUIT/g,
+ 'Cocina':/CABINET|GABINETE|COUNTER|SINK|FREGADERO|KITCHEN|COCINA|ESTUFA/g,'Puertas / Ventanas':/DOOR|PUERTA|WINDOW|VENTANA|HINGE|GOZNE|LOCK|CERRADURA/g,
+ 'Herramientas / Equipo':/DRILL|TALADRO|SAW|SIERRA|HAMMER|MARTILLO|\bBITS?\b|BLADE|DISCO|RENTAL|RENTA|ALQUILER|MILWAUKEE|\bMKE\b|DEWALT|RYOBI|TOOL/g};
+const MES={jan:1,ene:1,feb:2,mar:3,apr:4,abr:4,may:5,jun:6,jul:7,aug:8,ago:8,sep:9,oct:10,nov:11,dec:12,dic:12};
+function parseReceipt(t){
+ const L=t.split(/\n/).map(s=>s.replace(/\s+/g,' ').trim()).filter(Boolean),U=t.toUpperCase(),r={},num=s=>+s.replace(/[^\d.]/g,'');
+ const AMT=/\$?\s?(\d{1,3}(?:,\d{3})*\.\d{2}|\d+\.\d{2})/g,SKIP=/SUB-?TOTAL|SAVING|AHORR|\bTAX\b|IVU|ITEMS|ART[IÍ]CULOS|DESCUENTO|DISCOUNT|CAMBIO|CHANGE/i;
+ // Total: el mayor monto en líneas que dicen TOTAL/AMOUNT/MONTO
+ const tl=L.filter(l=>/\b(TOTAL|AMOUNT|MONTO|BALANCE|PAGADO)\b/i.test(l)&&!SKIP.test(l)).flatMap(l=>[...l.matchAll(AMT)].map(m=>num(m[1])));
+ const all=[...t.matchAll(AMT)].map(m=>num(m[1]));
+ r.total=tl.length?Math.max(...tl):all.length?Math.max(...all):null;r.hasTotal=tl.length>0;
+ // Fecha
+ const ok=(y,m,d)=>{y=+y<100?2000+ +y:+y;m=+m;d=+d;return y>=2020&&y<=2040&&m>=1&&m<=12&&d>=1&&d<=31?`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`:null};
+ const mes=s=>MES[s.toLowerCase()];
+ for(const[re,fn]of[[/\b(\d{4})-(\d{1,2})-(\d{1,2})\b/g,m=>ok(m[1],m[2],m[3])],[/\b(\d{1,2})\/(\d{1,2})\/(\d{2,4})\b/g,m=>ok(m[3],m[1],m[2])],
+   [/\b([A-Za-z]{3})[a-z]*\.?\s+(\d{1,2}),?\s+(\d{4})\b/g,m=>mes(m[1])&&ok(m[3],mes(m[1]),m[2])],[/\b(\d{1,2})\s+de\s+([a-z]{3})[a-z]*\s+(?:de\s+)?(\d{4})\b/gi,m=>mes(m[2])&&ok(m[3],mes(m[2]),m[1])]]){
+  for(const m of t.matchAll(re)){const d=fn(m);if(d){r.date=d;break}}
+  if(r.date)break}
+ // Suplidor
+ const known=S.expenses.map(e=>e.vendor).filter(v=>v&&v.length>3&&v!=='—');
+ r.vendor=(VENDORS.find(([re])=>re.test(U))||[])[1]||known.find(v=>U.includes(v.toUpperCase()))||L.find(l=>/[A-Za-z]{3}/.test(l)&&!/\d{3}/.test(l)&&l.length<40)||'';
+ // # de recibo
+ const rm=U.match(/CONTROL[:#\s]*([A-Z0-9]{4,}-[A-Z0-9]{4,})/)||U.match(/(?:ORDER|ORDEN|INVOICE|FACTURA|RECIBO|RECEIPT|TRANSACTION|TRANS)\s*(?:NO\.?|NUM(?:ERO)?\.?|#)?\s*[:#]?\s*([A-Z0-9][A-Z0-9-]{3,})/);
+ if(rm&&/\d/.test(rm[1]))r.receipt=rm[1];
+ // Artículos
+ const items=[],MK=/<\s?[A-Z]/,lastAmt=s=>{const a=[...(s||'').matchAll(AMT)];return a.length?num(a[a.length-1][1]):0};
+ if(L.some(l=>MK.test(l)))L.forEach((l,i)=>{ // formato Home Depot / Lowe's: SKU NOMBRE <A> precio, descripción en la próxima línea
+  if(!MK.test(l))return;const nx=L[i+1]||'',nx2=L[i+2]||'';
+  const name=(/[A-Za-z]{3}/.test(nx)&&!MK.test(nx)?nx:l.replace(/<.*$/,'')).replace(/^[\d-]{6,}\s*/,'').trim();
+  const price=/\d+\s*@/.test(nx2)?lastAmt(nx2):lastAmt(l.split(/<[^>]*>?/).pop());
+  items.push({name,price})});
+ else L.forEach((l,i)=>{if(SKIP.test(l)||/\b(TOTAL|USD|VISA|MASTERCARD|AUTH|CASH|EFECTIVO)\b/i.test(l))return;
+  const m=l.match(/^(?:\d{6,}\s+)?(.*?[A-Za-zÁÉÍÓÚÑáéíóúñ].*?)\s+(?:<\w>\s*)?\$?(\d[\d,]*\.\d{2})\s*[A-Z]?$/);if(!m)return;
+  let name=m[1].replace(/^\d+\s*@\s*[\d.]+\s*/,'').trim();const nx=L[i+1]||'';
+  if(nx&&!/\d\.\d{2}\b/.test(nx)&&/^[A-Z0-9 "'\/+&.,#-]{8,}$/.test(nx)&&!/^\d+$/.test(nx))name=nx;
+  items.push({name,price:num(m[2])})});
+ const cap=s=>s.toLowerCase().replace(/\b\w/g,c=>c.toUpperCase());
+ if(items.length)r.desc=items.slice(0,3).map(x=>cap(x.name)).join(', ')+(items.length>3?` y ${items.length-3} más`:''),r.note=items.length>1?items.map(x=>`${cap(x.name)} ${$(x.price)}`).join(' · '):'';
+ // Categoría por palabras clave
+ const src=(items.map(x=>x.name).join(' ')||U).toUpperCase();let best=['Misceláneos',0];
+ for(const[c,re]of Object.entries(CATKW)){const n=(src.match(re)||[]).length;if(n>best[1])best=[c,n]}
+ r.cat=best[0];return r;
+}
+function fillForm(r){const f=document.getElementById('frm');let n=0;
+ for(const k of['cat','date','desc','vendor','receipt','total','note']){const v=r[k];if(v==null||v===''||!f[k])continue;
+  if(k==='cat'&&v==='Misceláneos'&&f.cat.value!=='Misceláneos')continue;
+  f[k].value=k==='total'?(+v).toFixed(2):v;f[k].classList.add('auto');n++}
+ return n}
+
+// ---------- Sincronización con Excel (dos direcciones) ----------
+// La app lee y escribe la hoja "Proyeccion" (la misma que ustedes usan); solo le añade las columnas "Categoría" e "ID App".
+// Compara 3 versiones de cada gasto: la de la app, la del Excel y la de la última sincronización (base).
+// Lo que cambió de un solo lado se copia al otro; si cambió en ambos lados, se pregunta.
+// Compra y cierre (Adquisición, Cierre / Legal) viven en la app y aparecen en la hoja "Resumen (App)".
+const EXJS='https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js',PS='Proyeccion',XR='Resumen (App)',OLD='Gastos (App)',BKEY=KEY+'.base2';
+const PX=['date','cat','desc','vendor','receipt','total','jose','arnaldo','note'],NUM=['total','jose','arnaldo'];
+const APPONLY=['Adquisición','Cierre / Legal'],synced=e=>!APPONLY.includes(e.cat);
+const SETK=[['salePrice','Precio de venta meta ($)'],['commissionPct','Comisión corredor (%)'],['sellerClosing','Gastos de cierre del vendedor ($)'],['renoBudget','Presupuesto remodelación ($)'],['targetRoi','ROI meta (%)'],['profitSplit','Repartir ganancia (capital o 50/50)']];
+let xHandle=null,syncing=false,pushT=null,retryT=null,lastMod=0;
+const hasFS='showOpenFilePicker' in window;
+const getBase=()=>{try{return JSON.parse(localStorage.getItem(BKEY))}catch(e){return null}};
+const setBase=b=>{try{b?localStorage.setItem(BKEY,JSON.stringify(b)):localStorage.removeItem(BKEY)}catch(e){}};
+const norm=e=>{const o={};for(const k of PX){const v=e[k];o[k]=NUM.includes(k)?Math.round((+v||0)*100)/100:String(v??'').trim()}return o};
+const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+const pick=r=>Object.fromEntries(PX.map(k=>[k,r[k]]));
+const snapEx=list=>Object.fromEntries(list.filter(synced).map(e=>[e.id,norm(e)]));
+const exEq=(a,b)=>{const ka=Object.keys(a),kb=Object.keys(b);return ka.length===kb.length&&ka.every(k=>b[k]&&same(a[k],b[k]))};
+const stEq=(a,b)=>SETK.every(([k])=>String(a?.[k])===String(b?.[k]));
+const colL=n=>(n>26?String.fromCharCode(64+Math.floor((n-1)/26)):'')+String.fromCharCode(65+(n-1)%26);
+function guessCat(d){const U=String(d||'').toUpperCase();let b=['Misceláneos',0];for(const[c,re]of Object.entries(CATKW)){const n=(U.match(re)||[]).length;if(n>b[1])b=[c,n]}return b[0]}
+
+function syncStatus(msg,err){const s=document.getElementById('syncSt');if(s){s.textContent=msg;s.style.color=err?'var(--neg)':''}
+ const i=document.getElementById('syncInfo');if(i)i.textContent=(xHandle?`Archivo conectado: ${xHandle.name}. `:hasFS?'Sin archivo conectado. ':'Este navegador no permite escribir el archivo directamente: al sincronizar se descargará el Excel actualizado para que reemplaces el de la carpeta. (Usa Chrome o Edge para sincronización directa.) ')+msg}
+async function pickExcel(){const[h]=await showOpenFilePicker({types:[{description:'Excel',accept:{'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':['.xlsx']}}]});
+ xHandle=h;await idb('put','excelHandle',h);setBase(null);lastMod=0}
+function unlinkExcel(){xHandle=null;idb('delete','excelHandle').catch(()=>{});setBase(null);syncStatus('Desconectado.')}
+
+function cv(c){let v=c.value;if(v&&typeof v==='object'&&!(v instanceof Date)){if('result' in v)v=v.result;else if(v.richText)v=v.richText.map(r=>r.text).join('');else if('text' in v)v=v.text;else v=null}return v}
+const toDate=v=>{if(v instanceof Date)return v.toISOString().slice(0,10);v=String(v??'').trim();const m=v.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2}|\d{4})$/);return m?`${m[3].length===2?'20'+m[3]:m[3]}-${m[1].padStart(2,'0')}-${m[2].padStart(2,'0')}`:v};
+
+// Ubica las columnas de "Proyeccion" por su encabezado y la fila de totales (=SUM)
+function layout(ws){
+ let hr=0;ws.eachRow((r,n)=>{if(!hr&&/^total$/i.test(String(cv(r.getCell(2))??'').trim()))hr=n});
+ if(!hr)throw new Error('No encontré el encabezado "Total" en la hoja Proyeccion');
+ const H=ws.getRow(hr),C={desc:1};let maxc=1;
+ H.eachCell((c,i)=>{maxc=Math.max(maxc,i);const t=String(cv(c)??'').trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+  const k=t==='total'?'total':t==='tienda'?'vendor':t==='recibo'?'receipt':t.startsWith('deposito')?'paid':t==='restante'?'rest':t==='pago'?'flag':t.startsWith('quien pag')?'who':t.includes('calderon')?'jose':t.includes('aponte')?'arnaldo':t==='fecha'?'date':t==='comentario'?'note':t==='categoria'?'cat':t==='id app'?'id':null;
+  if(k&&!C[k])C[k]=i});
+ for(const[k,l]of[['cat','Categoría'],['id','ID App']])if(!C[k]){C[k]=++maxc;const c=H.getCell(C[k]);c.value=l;c.style=JSON.parse(JSON.stringify(H.getCell(C.note||C.total).style||{}))}
+ let tr=0;for(let n=hr+1;n<=ws.rowCount&&!tr;n++)if(/^SUM\(/i.test(ws.getRow(n).getCell(C.total).formula||''))tr=n;
+ return{hr,tr:tr||ws.rowCount+1,C,maxc}}
+function readPro(wb){
+ const ws=wb.getWorksheet(PS);if(!ws)return null;const L=layout(ws),rows=[];
+ for(let n=L.hr+1;n<L.tr;n++){const r=ws.getRow(n),g=k=>L.C[k]?cv(r.getCell(L.C[k])):null;
+  const o={row:n,id:Math.round(+g('id'))||0,desc:String(g('desc')??'').trim(),total:+g('total')||0,jose:+g('jose')||0,arnaldo:+g('arnaldo')||0,date:toDate(g('date'))};
+  ['vendor','receipt','note','cat'].forEach(k=>o[k]=String(g(k)??'').trim());
+  if(!o.desc&&!o.total)continue;
+  // Si "Deposito" es mayor que Jose + Arnaldo, la diferencia se asigna según "Quien Pago" (los dos = mitad y mitad)
+  o.raw={jose:o.jose,arnaldo:o.arnaldo};const dep=+g('paid')||0,extra=Math.round((dep-o.jose-o.arnaldo)*100)/100;
+  if(extra>0){const w=String(g('who')??'').toLowerCase(),J=/calder|jose|javier/.test(w),A=/aponte|arnaldo/.test(w);
+   if(J&&A||!J&&!A){const h=Math.round(extra*50)/100;o.jose+=h;o.arnaldo+=extra-h}else if(A)o.arnaldo+=extra;else o.jose+=extra;o.adj=true}if(!CATS.includes(o.cat))o.cat='';o.noCat=!o.cat;rows.push(o)}
+ const st={},acq={};const rs=wb.getWorksheet(XR);
+ if(rs)rs.eachRow(r=>{const k=String(cv(r.getCell(3))??'').trim(),v=cv(r.getCell(2));
+  if(SETK.some(s=>s[0]===k))st[k]=k==='profitSplit'?(String(v).includes('50')?'50':'capital'):+v||0;else if(k)acq[k]=+v||0});
+ return{ws,L,rows,st:rs?st:null,acq}}
+
+function merge(x,base){
+ const R={fromX:0,added:0,deleted:0,conf:[]},app=S.expenses.filter(synced),A=new Map(app.map(e=>[e.id,e]));
+ const freeId=id=>id&&!S.expenses.some(z=>z.id===id&&!synced(z));
+ if(!base){ // primera vez en este navegador: el Excel manda; se emparejan filas para conservar recibos y notas
+  const used=new Set(),find=f=>app.find(e=>!used.has(e.id)&&f(e)),key=s=>String(s||'').toLowerCase().replace(/\W/g,'');
+  let m=Math.max(0,...S.expenses.map(e=>e.id),...x.rows.map(r=>r.id));
+  const out=x.rows.map(r=>{const a=(r.id&&!used.has(r.id)&&A.get(r.id))||(r.receipt&&find(e=>key(e.receipt)===key(r.receipt)))||find(e=>Math.abs(e.total-r.total)<.005&&r.total)||find(e=>key(e.vendor)&&key(e.vendor)===key(r.vendor));
+   if(a)used.add(a.id);const e={check:'',file:'',...(a||{}),...pick(r),cat:r.cat||a?.cat||guessCat(r.desc)};
+   e.id=freeId(r.id)&&!out_ids.has(r.id)?r.id:a&&!out_ids.has(a.id)?a.id:++m;out_ids.add(e.id);r.id=e.id;return e});
+  S.expenses=[...S.expenses.filter(e=>!synced(e)),...out];if(x.st)Object.assign(S.settings,x.st);uid=m+1;R.fromX=out.length;return R}
+ const B=base.ex||{},inX=new Set();
+ for(const r of x.rows){
+  if(inX.has(r.id))r.id=0;
+  if(!r.cat)r.cat=A.get(r.id)?.cat||guessCat(r.desc);
+  const xn=norm(r),a=r.id&&A.get(r.id),b=r.id&&B[r.id];
+  if(!r.id||(!a&&!b)){const e={...pick(r),check:'',file:'',id:freeId(r.id)&&!S.expenses.some(z=>z.id===r.id)?r.id:uid++};r.id=e.id;S.expenses.push(e);inX.add(e.id);R.added++;continue}
+  inX.add(r.id);
+  if(a&&b){const aC=!same(norm(a),b),xC=!same(xn,b);if(xC&&!aC){Object.assign(a,xn);R.fromX++}else if(xC&&aC&&!same(xn,norm(a)))R.conf.push([a,xn])}
+  else if(a&&!b){if(!same(norm(a),xn))R.conf.push([a,xn])}
+  // !a && b: se borró en la app → se borra del Excel al escribir
+ }
+ const gone=app.filter(e=>B[e.id]&&!inX.has(e.id)&&same(norm(e),B[e.id]));
+ if(gone.length&&(gone.length<=3||confirm(`En el Excel se borraron ${gone.length} gastos:\n${gone.slice(0,8).map(e=>'• '+e.desc).join('\n')}\n\n¿Borrarlos también de la app?`))){
+  const ids=new Set(gone.map(e=>e.id));S.expenses=S.expenses.filter(e=>!ids.has(e.id));R.deleted=gone.length}
+ if(R.conf.length&&confirm(`${R.conf.length} gasto(s) se cambiaron en la app Y en el Excel:\n${R.conf.slice(0,8).map(([a])=>'• '+a.desc).join('\n')}\n\nAceptar = quedarse con la versión del EXCEL\nCancelar = quedarse con la versión de la APP`))
+  R.conf.forEach(([a,xn])=>{Object.assign(a,xn);R.fromX++});
+ if(x.st)for(const[k]of SETK){const xv=x.st[k],bv=base.st?.[k];if(xv!==undefined&&String(xv)!==String(bv)&&String(S.settings[k])===String(bv)){S.settings[k]=xv;R.fromX++}}
+ uid=Math.max(uid,...S.expenses.map(e=>e.id+1));return R}
+let out_ids=new Set();
+
+// Mueve referencias de fila en fórmulas cuando se insertan/borran filas (=B30-E30 → =B31-E31)
+const shiftF=(f,from,d)=>f.replace(/(^|[^A-Za-z0-9_!'.])(\$?[A-Z]{1,3}\$?)(\d+)(?![\d(A-Za-z_])/g,(m,p,c,r)=>p+c+(+r>=from?+r+d:r));
+function shift(ws,from,d){ws.eachRow(r=>r.eachCell(c=>{const f=c.formula;if(f){const nf=shiftF(f,from,d);if(nf!==f)c.value={formula:nf}}}))}
+function unshare(ws){ws.eachRow(r=>r.eachCell(c=>{const v=c.value;if(v&&typeof v==='object'&&(v.sharedFormula||v.shareType))c.value={formula:c.formula,result:v.result}}))}
+function put(row,e,C,old){
+ const set=(k,v)=>{if(C[k])row.getCell(C[k]).value=v},n=norm(e),ch=k=>!old||String(old[k])!==String(n[k]);
+ if(ch('desc'))set('desc',e.desc);if(ch('total'))set('total',+e.total||0);
+ for(const k of['vendor','receipt','note'])if(ch(k))set(k,e[k]||null);
+ if(ch('date'))set('date',/^\d{4}-\d{2}-\d{2}$/.test(e.date||'')?new Date(e.date+'T00:00:00Z'):(e.date||null));
+ set('cat',e.cat);set('id',e.id);
+ if(ch('jose')||ch('arnaldo')||ch('total')){const j=+e.jose||0,a=+e.arnaldo||0,t=+e.total||0;
+  if(ch('jose'))set('jose',j||null);if(ch('arnaldo'))set('arnaldo',a||null);set('paid',j+a);
+  set('who',j&&a?'Jose Javier Calderon / Arnaldo Aponte':j?'Jose Javier Calderon':a?'Arnaldo Aponte':null);set('flag',t>0&&t-j-a<=.005?'X':null)}}
+function writePro(x){
+ const{ws,L}=x,C=L.C,app=S.expenses.filter(synced),ids=new Set(app.map(e=>e.id)),base=getBase();unshare(ws);
+ // 1) filas borradas en la app (de abajo hacia arriba)
+ for(const r of x.rows.filter(r=>!ids.has(r.id)&&base?.ex?.[r.id]).sort((a,b)=>b.row-a.row)){
+  ws.spliceRows(r.row,1);shift(ws,r.row+1,-1);L.tr--;x.rows.forEach(o=>{if(o.row>r.row)o.row--});r.row=0}
+ // 2) filas existentes: solo se escriben las celdas que cambiaron (se conservan formato y fórmulas)
+ const rowOf=new Map(x.rows.filter(r=>r.row&&ids.has(r.id)).map(r=>[r.id,r]));
+ for(const e of app){const r=rowOf.get(e.id);if(r)put(ws.getRow(r.row),e,C,{...norm({...r,...r.raw}),cat:r.noCat?'':r.cat})}
+ // 3) gastos nuevos de la app: se insertan antes de la fila de totales, con el formato de la fila de arriba
+ for(const e of app.filter(e=>!rowOf.has(e.id))){const at=L.tr;ws.spliceRows(at,0,[]);shift(ws,at,1);L.tr++;
+  const row=ws.getRow(at),prev=ws.getRow(at-1);for(let c=1;c<=L.maxc;c++)row.getCell(c).style=JSON.parse(JSON.stringify(prev.getCell(c).style||{}));
+  put(row,e,C,null);if(C.rest&&C.paid)row.getCell(C.rest).value={formula:`${colL(C.total)}${at}-${colL(C.paid)}${at}`}}
+ // 4) totales: los SUM cubren todas las filas de gastos
+ const f=L.hr+1,l=L.tr-1;
+ if(C.rest&&C.paid)for(let n=f;n<=l;n++){const c=ws.getRow(n).getCell(C.rest);if(/^\$?[A-Z]+\$?\d+-\$?[A-Z]+\$?\d+$/.test(c.formula||''))c.value={formula:`${colL(C.total)}${n}-${colL(C.paid)}${n}`}}
+ if(L.tr<=ws.rowCount)ws.getRow(L.tr).eachCell(c=>{const fm=c.formula;if(fm&&/^SUM\(\$?[A-Z]+\$?\d+:\$?[A-Z]+\$?\d+\)$/i.test(fm))c.value={formula:fm.replace(/^SUM\((\$?[A-Z]+)\$?\d+:(\$?[A-Z]+)\$?\d+\)$/i,(m,a,b)=>`SUM(${a}${f}:${b}${l})`)}});
+ for(let n=f;n<=l+100;n++)ws.getCell(colL(C.cat)+n).dataValidation={type:'list',allowBlank:true,formulae:['"'+CATS.join(',')+'"']};
+ return{f,l}}
+function acqVals(){const s=(c,k)=>S.expenses.filter(e=>e.cat===c).reduce((a,e)=>a+(+e[k]||0),0);
+ return{acq:s('Adquisición','total'),cie:s('Cierre / Legal','total'),acqJ:s('Adquisición','jose')+s('Cierre / Legal','jose'),acqA:s('Adquisición','arnaldo')+s('Cierre / Legal','arnaldo')}}
+function writeResumen(wb,x,{f,l}){
+ for(const n of[XR,OLD]){const w=wb.getWorksheet(n);if(w)wb.removeWorksheet(w.id)}
+ const G='FF1F6F5C',money='"$"#,##0.00',head=r=>{r.font={bold:true,color:{argb:'FFFFFFFF'}};r.fill={type:'pattern',pattern:'solid',fgColor:{argb:G}}};
+ const rs=wb.addWorksheet(XR,{properties:{tabColor:{argb:'FFC98A2B'}}});rs.columns=[{width:46},{width:18},{width:16}];
+ const C=x.L.C,P=`'${PS}'!`,rg=k=>`${P}$${colL(C[k])}$${f}:$${colL(C[k])}$${l}`,av=acqVals();
+ rs.addRow(['Casa Villa Carolina — Resumen']).font={bold:true,size:14};
+ rs.addRow(['Edita los valores en amarillo; la app los toma al sincronizar. Los gastos se editan en la hoja Proyeccion.']).font={italic:true,color:{argb:'FF6B736F'}};
+ head(rs.addRow(['Supuestos','Valor','(clave)']));
+ SETK.forEach(([k,lb])=>{const r=rs.addRow([lb,k==='profitSplit'?(S.settings[k]==='50'?'50/50':'capital'):+S.settings[k],k]);r.getCell(2).fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFF2CC'}};r.getCell(3).font={color:{argb:'FF9AA39F'},size:9}});
+ ['B4','B6','B7'].forEach(c=>rs.getCell(c).numFmt=money);
+ rs.addRow([]);head(rs.addRow(['Resultados (se calculan solos)','','']));
+ const F=(lb,v,key,fmt=money)=>{const r=rs.addRow([lb,typeof v==='string'?{formula:v}:v,key||'']);r.getCell(2).numFmt=fmt;r.getCell(3).font={color:{argb:'FF9AA39F'},size:9};return r.number};
+ const cmp=F('Compra de la casa (de la app)',av.acq,'acq'),cie=F('Cierre / legal (de la app)',av.cie,'cie');
+ const ren=F('Remodelación (hoja Proyeccion)',`SUM(${rg('total')})`),inv=F('Inversión total',`B${cmp}+B${cie}+B${ren}`);
+ const cvn=F('Costos de venta (comisión + cierre)','B4*B5/100+B6'),gan=F('GANANCIA NETA PROYECTADA',`B4-B${cvn}-B${inv}`);rs.getRow(gan).font={bold:true};
+ F('% Ganancia (ROI)',`IFERROR(B${gan}/B${inv},0)`,'','0.0%');F('Margen sobre venta',`IFERROR(B${gan}/B4,0)`,'','0.0%');
+ F('Punto de equilibrio',`(B${inv}+B6)/(1-B5/100)`);F('Presupuesto remodelación disponible',`B7-B${ren}`);
+ const aj=F('Compra/cierre pagado por Jose (de la app)',av.acqJ,'acqJ'),aa=F('Compra/cierre pagado por Arnaldo (de la app)',av.acqA,'acqA');
+ const tj=F('Total aportado por Jose',`B${aj}+SUM(${C.jose?rg('jose'):'0'})`),ta=F('Total aportado por Arnaldo',`B${aa}+SUM(${C.arnaldo?rg('arnaldo'):'0'})`);
+ F('Pendiente por pagar',`B${inv}-B${tj}-B${ta}`);
+ wb.calcProperties={...(wb.calcProperties||{}),fullCalcOnLoad:true}}
+
+async function syncCore(file,writeOut){
+ await loadJS(EXJS);const wb=new ExcelJS.Workbook();await wb.xlsx.load(await file.arrayBuffer());
+ const x=readPro(wb);if(!x)throw new Error('No encontré la hoja "Proyeccion" en el Excel');
+ const needIds=x.rows.some(r=>!r.id||r.noCat||r.adj)||new Set(x.rows.map(r=>r.id)).size!==x.rows.length;
+ out_ids=new Set();const R=merge(x,getBase());
+ const now={ex:snapEx(S.expenses),st:{...S.settings}},av=acqVals();
+ const xNow=Object.fromEntries(x.rows.map(r=>[r.id,norm(r)]));
+ try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
+ let wrote=false;
+ if(needIds||!exEq(xNow,now.ex)||!stEq(x.st,now.st)||Object.keys(av).some(k=>Math.abs((x.acq[k]??-1)-av[k])>.005)||wb.getWorksheet(OLD)){
+  await firstBackup(file);const rg=writePro(x);writeResumen(wb,x,rg);await writeOut(await wb.xlsx.writeBuffer());wrote=true}
+ setBase(now);render();
+ const p=[];if(R.fromX)p.push(`${R.fromX} cambio(s) traídos del Excel`);if(R.added)p.push(`${R.added} nuevo(s) del Excel`);if(R.deleted)p.push(`${R.deleted} borrado(s)`);if(wrote)p.push('Excel actualizado');
+ return p.join(' · ')||'sin cambios'}
+async function firstBackup(file){try{const k=KEY+'.bk2.'+file.name;if(localStorage.getItem(k))return;dl(file.name.replace(/\.xlsx$/i,'')+' - copia antes de sincronizar Proyeccion.xlsx',file,file.type);localStorage.setItem(k,'1')}catch(e){}}
+
+async function syncExcel(manual){
+ if(syncing)return;clearTimeout(retryT);
+ if(!hasFS){if(manual)fallbackSync();return}
+ try{
+  if(!xHandle){if(!manual)return;await pickExcel()}
+  const o={mode:'readwrite'};
+  if(await xHandle.queryPermission(o)!=='granted'){if(!manual){syncStatus('Presiona 🔄 para sincronizar');return}if(await xHandle.requestPermission(o)!=='granted')throw new Error('No se dio permiso para usar el archivo')}
+  syncing=true;syncStatus('Sincronizando…');
+  const msg=await syncCore(await xHandle.getFile(),async buf=>{const w=await xHandle.createWritable();await w.write(buf);await w.close()});
+  lastMod=(await xHandle.getFile()).lastModified;syncStatus(`✓ ${new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})} — ${msg}`);
+ }catch(e){
+  if(e.name==='AbortError')syncStatus('');
+  else if(/NoModificationAllowed|InvalidState|NotReadable|NotAllowed/.test(e.name)&&xHandle){syncStatus('⚠ El Excel está abierto: ciérralo (después de guardar) y se sincroniza solo',true);retryT=setTimeout(()=>syncExcel(false),10000)}
+  else syncStatus('⚠ '+(e.message||e),true)}
+ finally{syncing=false}}
+function fallbackSync(){const i=document.createElement('input');i.type='file';i.accept='.xlsx';
+ i.onchange=async()=>{const f=i.files[0];if(!f)return;syncStatus('Sincronizando…');
+  try{const msg=await syncCore(f,async buf=>dl(f.name,buf,'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'));syncStatus(`✓ ${msg}. Si se descargó un Excel, reemplaza el de la carpeta con ese archivo.`)}catch(e){syncStatus('⚠ '+(e.message||e),true)}};i.click()}
+// Cambios en la app → Excel (automático si ya hay permiso). Cambios en el Excel → app al volver a esta ventana.
+window.autoPush=()=>{if(!xHandle)return;clearTimeout(pushT);pushT=setTimeout(()=>syncExcel(false),1500)};
+async function checkExcel(){if(!xHandle||syncing)return;try{if(await xHandle.queryPermission({mode:'readwrite'})!=='granted')return;if((await xHandle.getFile()).lastModified!==lastMod)syncExcel(false)}catch(e){}}
+window.addEventListener('focus',checkExcel);document.addEventListener('visibilitychange',()=>document.visibilityState==='visible'&&checkExcel());
+(async()=>{try{xHandle=await idb('get','excelHandle')||null}catch(e){}
+ if(xHandle)syncExcel(false);else syncStatus(hasFS?'Excel no conectado':'');})();
+
+function dl(name,data,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;a.click()}
+const toDataURL=b=>new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(b)});
+async function backup(){const files={};
+ for(const e of S.expenses.filter(e=>e.upload)){try{const b=await idb('get',e.id);if(b)files[e.id]=await toDataURL(b)}catch(x){}}
+ dl('villa-carolina-respaldo-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({...S,files}),'application/json')}
+function restore(f){if(!f)return;f.text().then(async t=>{const s=JSON.parse(t);if(!s.expenses)throw 0;const files=s.files||{};delete s.files;
+ for(const[id,u]of Object.entries(files)){try{await idb('put',+id,await(await fetch(u)).blob())}catch(x){}}
+ S=s;uid=Math.max(0,...S.expenses.map(e=>e.id))+1;save();render();alert('Respaldo importado ✓')}).catch(()=>alert('Archivo no válido'))}
+function csv(){const h=['Fecha','Categoría','Descripción','Suplidor','Recibo','Total','Pagó Jose','Pagó Arnaldo','Pendiente','Comentario','Revisar','Documento'];
+ const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+ const r=S.expenses.map(e=>[e.date,e.cat,e.desc,e.vendor,e.receipt,e.total,e.jose,e.arnaldo,pend(e),e.note,e.check,e.file].map(q).join(','));
+ dl('gastos-villa-carolina.csv','﻿'+[h.map(q).join(','),...r].join('\r\n'),'text/csv')}
+render();
+</script>
+</body>
+</html>
